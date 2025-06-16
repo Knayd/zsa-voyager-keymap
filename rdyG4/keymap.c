@@ -236,7 +236,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, 1, 2, 3);
+  // Nav + Sym = Func
+  state =  update_tri_layer_state(state, 1, 2, 3)
+  // Nav + Num = Mouse
+  state =  update_tri_layer_state(state, 1, 4, 5)
+  return state;
 }
 
 typedef struct {
