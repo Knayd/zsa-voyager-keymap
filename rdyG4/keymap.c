@@ -148,7 +148,8 @@ bool rgb_matrix_indicators_user(void) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  uprintf("kc: %s\n", get_keycode_string(keycode));
+  const char *key_name = get_keycode_string(keycode);
+  uprintf("kc: %s\n", key_name);
   switch (keycode) {
     case ST_MACRO_0:
     if (record->event.pressed) {
