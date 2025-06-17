@@ -69,10 +69,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [5] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_MS_ACCEL0,   KC_MS_ACCEL1,   KC_MS_ACCEL2,   KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_LEFT_ALT,    KC_TAB,         LSFT(KC_TAB),                                   KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_UP,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LSFT),  OSM(MOD_LCTL),  KC_MS_WH_UP,                                    KC_TRANSPARENT, KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_RIGHT,    KC_MS_BTN3,     KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_WH_LEFT,  KC_MS_WH_RIGHT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_M,           KC_COMMA,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-                                                    KC_MS_WH_DOWN,  KC_TRANSPARENT,                                 KC_MS_BTN2,     KC_MS_BTN1
+    KC_TRANSPARENT, KC_MS_WH_LEFT,  KC_MS_WH_RIGHT, KC_MS_WH_DOWN,  KC_MS_WH_UP,    KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_UP,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LSFT),  OSM(MOD_LCTL),  KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_RIGHT,    KC_MS_BTN3,     KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_MS_BTN2,     KC_MS_BTN1
   ),
   [6] = LAYOUT_voyager(
     RGB_TOG,        TOGGLE_LAYER_COLOR,RGB_MODE_FORWARD,RGB_SLD,        RGB_VAD,        RGB_VAI,                                        HSV_0_255_255,  HSV_74_255_255, HSV_152_255_255,HSV_41_255_255, HSV_135_255_255,QK_BOOT,        
@@ -91,14 +91,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-const uint16_t PROGMEM combo0[] = { KC_M, KC_COMMA, COMBO_END};
-const uint16_t PROGMEM combo1[] = { KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM combo2[] = { OSM(MOD_LSFT), LT(4, KC_ENTER), COMBO_END};
+const uint16_t PROGMEM combo0[] = { KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM combo1[] = { OSM(MOD_LSFT), LT(4, KC_ENTER), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo0, TG(5)),
-    COMBO(combo1, OSM(MOD_LCTL)),
-    COMBO(combo2, CW_TOGG),
+    COMBO(combo0, OSM(MOD_LCTL)),
+    COMBO(combo1, CW_TOGG),
 };
 
 
@@ -109,9 +107,7 @@ void keyboard_post_init_user(void) {
 }
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-    [5] = { {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,255} },
-
-    [7] = { {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181}, {0,190,181} },
+    [7] = { {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255}, {0,255,255} },
 
 };
 
@@ -138,9 +134,6 @@ bool rgb_matrix_indicators_user(void) {
   }
   if (keyboard_config.disable_layer_led) { return false; }
   switch (biton32(layer_state)) {
-    case 5:
-      set_layer_color(5);
-      break;
     case 7:
       set_layer_color(7);
       break;
