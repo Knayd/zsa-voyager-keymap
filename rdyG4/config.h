@@ -21,7 +21,7 @@
 #undef MOUSEKEY_WHEEL_TIME_TO_MAX
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 8
 
-#define SERIAL_NUMBER "rdyG4/qmy7nZ"
+#define SERIAL_NUMBER "rdyG4/bvnMgA"
 #define LAYER_STATE_16BIT
 #define COMBO_COUNT 3
 
