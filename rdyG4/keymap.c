@@ -148,6 +148,7 @@ bool rgb_matrix_indicators_user(void) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uprintf("kc: %s\n", get_keycode_string(keycode));
   switch (keycode) {
     case ST_MACRO_0:
     if (record->event.pressed) {
@@ -157,12 +158,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ST_MACRO_1:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
-    }
-    break;
-
-    case OSM(MOD_LSFT):
-    if (record->event.pressed) {
-      print("OSM(MOD_LSFT) pressed!");
     }
     break;
 
