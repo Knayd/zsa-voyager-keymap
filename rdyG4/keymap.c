@@ -160,7 +160,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     break;
 
-    case  OSM(MOD_LSFT):
+    case OSM(MOD_LSFT):
     if (record->event.pressed) {
       print("OSM(MOD_LSFT) pressed!");
     }
@@ -241,6 +241,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   // Nav + Num = Mouse
   state =  update_tri_layer_state(state, 1, 4, 5);
   return state;
+}
+
+void keyboard_post_init_user(void) {
+  debug_enable=true;
+  debug_matrix=true;
+  debug_keyboard=true;
+  //debug_mouse=true;
 }
 
 typedef struct {
