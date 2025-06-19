@@ -248,18 +248,26 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void oneshot_mods_changed_user(uint8_t mods) {
   if (mods & MOD_MASK_SHIFT) {
     println("Oneshot mods SHIFT");
+    rgb_matrix_set_color(0,0,255,255)
   }
   if (mods & MOD_MASK_CTRL) {
     println("Oneshot mods CTRL");
+    rgb_matrix_set_color(0,0,255,255)
   }
   if (mods & MOD_MASK_ALT) {
     println("Oneshot mods ALT");
+    rgb_matrix_set_color(0,0,255,255)
   }
   if (mods & MOD_MASK_GUI) {
     println("Oneshot mods GUI");
+    rgb_matrix_set_color(0,0,255,255)
   }
   if (!mods) {
     println("Oneshot mods off");
+    rgb_matrix_set_color(0,0,255,255)
+    rgb_matrix_set_color(1,0,255,255)
+    rgb_matrix_set_color(2,0,255,255)
+    rgb_matrix_set_color(3,0,255,255)
   }
 }
 
