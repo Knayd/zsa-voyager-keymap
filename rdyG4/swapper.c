@@ -20,6 +20,9 @@ void update_swapper(
             // Don't unregister cmdish until some other key is hit or released.
         }
     } else if (*active) {
+        if(is_swapper_cancel_key(keycode)) {
+            tap_code(KC_ESCAPE);
+        }
         unregister_code(cmdish);
         *active = false;
     }

@@ -199,6 +199,15 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     }
 }
 
+bool is_swapper_cancel_key(uint16_t keycode) {
+    switch (keycode) {
+    case KC_ESCAPE:
+        return true;
+    default:
+        return false;
+    }
+}
+
 bool sw_win_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

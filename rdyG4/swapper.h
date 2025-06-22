@@ -18,3 +18,6 @@ void update_swapper(
     uint16_t keycode,
     keyrecord_t *record
 );
+
+// To be implemented by the consumer. Defines keys to cancel swapper.
+bool is_swapper_cancel_key(uint16_t keycode);
