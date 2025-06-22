@@ -7,3 +7,4 @@ SPACE_CADET_ENABLE = no
 COMBO_ENABLE = yes
 DYNAMIC_TAPPING_TERM_ENABLE = yes
 SRC +=  swapper.c
+SRC +=  oneshot.c
