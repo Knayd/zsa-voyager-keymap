@@ -33,6 +33,8 @@ enum custom_keycodes {
 
   // Magic keys
   DLT_WRD, // Delete word
+  NEXT_TAB,
+  PREV_TAB,
 };
 
 oneshot_state os_shft_state = os_up_unqueued;
@@ -59,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         LCTL(KC_PAGE_UP),LCTL(KC_PGDN),  KC_TRANSPARENT,                                 KC_PAGE_UP,     KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         PREV_TAB,       NEXT_TAB,       KC_TRANSPARENT,                                 KC_PAGE_UP,     KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
     DLT_WRD,        OS_GUI,         OS_ALT,         OS_SHFT,        OS_CTRL,  KC_TRANSPARENT,                                 KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
     LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
@@ -248,6 +250,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_mods = MOD_LCTL,
             .mac_os_key = KC_BSPC,
             .mac_os_mods = MOD_LALT
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = NEXT_TAB,
+            .default_key = KC_PGDN,
+            .default_mods = MOD_LCTL,
+            .mac_os_key = KC_PGDN,
+            .mac_os_mods = MOD_LGUI
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = PREV_TAB,
+            .default_key = KC_PAGE_UP,
+            .default_mods = MOD_LCTL,
+            .mac_os_key = KC_PAGE_UP,
+            .mac_os_mods = MOD_LGUI
         },
         keycode,
         record
