@@ -261,7 +261,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_key = KC_PGDN,
             .default_mods = MOD_LCTL,
             .mac_os_key = KC_RBRC,
-            .mac_os_mods = MOD_LSFT | MOD_LGUI
+            .mac_os_mods = MOD_LSFT | MOD_LCTL
         },
         keycode,
         record
@@ -273,7 +273,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_key = KC_PAGE_UP,
             .default_mods = MOD_LCTL,
             .mac_os_key = KC_LBRC,
-            .mac_os_mods = MOD_LSFT | MOD_LGUI
+            .mac_os_mods = MOD_LSFT | MOD_LCTL
         },
         keycode,
         record
