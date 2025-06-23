@@ -29,6 +29,9 @@ enum custom_keycodes {
   OS_CTRL,
   OS_ALT,
   OS_GUI,
+
+  // Magic keys
+  DLT_WRD, // Delete word
 };
 
 oneshot_state os_shft_state = os_up_unqueued;
@@ -56,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         LCTL(KC_PAGE_UP),LCTL(KC_PGDN),  KC_TRANSPARENT,                                 KC_PAGE_UP,     KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
-    LALT(KC_BSPC),  OS_GUI,         OS_ALT,         OS_SHFT,        OS_CTRL,  KC_TRANSPARENT,                                 KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    DLT_WRD,        OS_GUI,         OS_ALT,         OS_SHFT,        OS_CTRL,  KC_TRANSPARENT,                                 KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
     LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_LEFT_GUI,                                    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -248,6 +251,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
     }
     break;
+
+    // TODO: abstract this logic to make it reusable
+    case DLT_WRD:
+      os_variant_t os = detected_host_os();
+      uint16_t mod = (os == OS_MACOS || os == OS_IOS) ? MOD_LALT : MOD_LCTL;
+      uint16_t key = KC_BSPC;
+
+      if (record->event.pressed) {
+          add_mods(mod);
+          register_code(key);
+      } else {
+          unregister_code(key);
+          del_mods(mod);
+      }
+      return false;
 
     case RGB_SLD:
       if (record->event.pressed) {

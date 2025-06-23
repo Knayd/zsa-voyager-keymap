@@ -6,5 +6,6 @@ TAP_DANCE_ENABLE = yes
 SPACE_CADET_ENABLE = no
 COMBO_ENABLE = yes
 DYNAMIC_TAPPING_TERM_ENABLE = yes
+OS_DETECTION_ENABLE = yes
 SRC +=  swapper.c
 SRC +=  oneshot.c
