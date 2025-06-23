@@ -15,12 +15,14 @@ void handle_magic_key(
     if (record->event.pressed) {
         if(mods) {
             add_mods(mods);
+            send_keyboard_report();
         }
         register_code(key);
     } else {
         unregister_code(key);
         if(mods) {
             del_mods(mods);
+            send_keyboard_report();
         }
     }
 }
