@@ -260,8 +260,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = NEXT_TAB,
             .default_key = KC_PGDN,
             .default_mods = MOD_LCTL,
-            .mac_os_key = KC_PGDN,
-            .mac_os_mods = MOD_LGUI
+            .mac_os_key = KC_RBRC,
+            .mac_os_mods = KC_LSFT | KC_LGUI
         },
         keycode,
         record
@@ -272,8 +272,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = PREV_TAB,
             .default_key = KC_PAGE_UP,
             .default_mods = MOD_LCTL,
-            .mac_os_key = KC_PAGE_UP,
-            .mac_os_mods = MOD_LGUI
+            .mac_os_key = KC_LBRC,
+            .mac_os_mods = KC_LSFT | KC_LGUI
         },
         keycode,
         record
