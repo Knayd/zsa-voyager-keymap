@@ -4,6 +4,7 @@
 #include "print.h"
 #include "swapper.h"
 #include "oneshot.h"
+#include "magickey.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
 #define LA_NAV MO(1)
@@ -240,6 +241,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keycode, record
     );
 
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = DLT_WRD,
+            .default_key = KC_BSPC,
+            .default_mods = MOD_LCTL,
+            .mac_os_key = KC_BSPC,
+            .mac_os_mods = MOD_LALT
+        },
+        keycode,
+        record
+    );
+
   switch (keycode) {
     case ST_MACRO_0:
     if (record->event.pressed) {
@@ -251,21 +264,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
     }
     break;
-
-    // TODO: abstract this logic to make it reusable
-    case DLT_WRD:
-      os_variant_t os = detected_host_os();
-      uint16_t mod = (os == OS_MACOS || os == OS_IOS) ? MOD_LALT : MOD_LCTL;
-      uint16_t key = KC_BSPC;
-
-      if (record->event.pressed) {
-          add_mods(mod);
-          register_code(key);
-      } else {
-          unregister_code(key);
-          del_mods(mod);
-      }
-      return false;
 
     case RGB_SLD:
       if (record->event.pressed) {
