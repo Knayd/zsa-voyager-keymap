@@ -21,7 +21,8 @@ void update_swapper(
         }
     } else if (*active) {
         if(is_swapper_cancel_key(keycode)) {
-            tap_code(KC_ESCAPE);
+            register_code(KC_ESCAPE);
+            unregister_code(KC_ESCAPE);
         }
         unregister_code(cmdish);
         *active = false;
