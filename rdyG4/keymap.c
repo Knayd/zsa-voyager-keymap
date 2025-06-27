@@ -248,7 +248,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = DLT_WRD,
             .default_key = KC_BSPC,
             .default_mods = MOD_LCTL,
-            .mac_os_key = KC_BSPC,
             .mac_os_mods = MOD_LALT
         },
         keycode,
