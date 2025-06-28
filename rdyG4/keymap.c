@@ -37,6 +37,16 @@ enum custom_keycodes {
   DLT_WRD, // Delete word
   NEXT_TAB,
   PREV_TAB,
+  // Win manager keys
+  WIN_LEFT,
+  WIN_RIGHT,
+  WIN_UP,
+  WIN_DOWN,
+  WIN_FULL,
+  DESK_LEFT,
+  DESK_RIGHT,
+  MON_LEFT,
+  MON_RIGHT,
 };
 
 oneshot_state os_shft_state = os_up_unqueued;
@@ -111,10 +121,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_NO,          KC_NO,                                          KC_NO,          KC_NO
   ),
   [8] = LAYOUT_voyager(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, WIN_FULL,       DESK_LEFT,      DESK_RIGHT,     KC_TRANSPARENT,                                 KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
 };
@@ -282,6 +292,98 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_mods = MOD_LCTL,
             .mac_os_key = KC_LBRC,
             .mac_os_mods = MOD_LSFT | MOD_LCTL
+        },
+        keycode,
+        record
+    );
+
+    // Win manager keys
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WIN_LEFT,
+            .default_key = KC_LEFT,
+            .default_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WIN_RIGHT,
+            .default_key = KC_RIGHT,
+            .default_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WIN_UP,
+            .default_key = KC_UP,
+            .default_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WIN_DOWN,
+            .default_key = KC_UP,
+            .default_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WIN_FULL,
+            .default_key = KC_UP,
+            .default_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = DESK_LEFT,
+            .default_key = KC_LEFT,
+            .default_mods = MOD_LGUI | MOD_LCTL,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = DESK_RIGHT,
+            .default_key = KC_RIGHT,
+            .default_mods = MOD_LGUI | MOD_LCTL,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = MON_LEFT,
+            .default_key = KC_LEFT,
+            .default_mods = MOD_LGUI | MOD_LSFT,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = MON_RIGHT,
+            .default_key = KC_RIGHT,
+            .default_mods = MOD_LGUI | MOD_LSFT,
         },
         keycode,
         record
