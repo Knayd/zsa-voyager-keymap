@@ -332,7 +332,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     handle_magic_key(
         (magic_key_config_t){
             .trigger = WIN_DOWN,
-            .default_key = KC_UP,
+            .default_key = KC_DOWN,
             .default_mods = MOD_LGUI,
         },
         keycode,
