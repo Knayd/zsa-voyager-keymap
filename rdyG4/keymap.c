@@ -304,6 +304,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = WIN_LEFT,
             .default_key = KC_LEFT,
             .default_mods = MOD_LGUI,
+            .mac_os_mods = MOD_LGUI | MOD_LALT,
         },
         keycode,
         record
@@ -314,6 +315,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = WIN_RIGHT,
             .default_key = KC_RIGHT,
             .default_mods = MOD_LGUI,
+            .mac_os_mods = MOD_LGUI | MOD_LALT,
         },
         keycode,
         record
@@ -324,6 +326,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = WIN_UP,
             .default_key = KC_UP,
             .default_mods = MOD_LGUI,
+            .mac_os_mods = MOD_LGUI | MOD_LALT,
         },
         keycode,
         record
@@ -334,6 +337,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = WIN_DOWN,
             .default_key = KC_DOWN,
             .default_mods = MOD_LGUI,
+            .mac_os_mods = MOD_LGUI | MOD_LALT,
         },
         keycode,
         record
@@ -344,6 +348,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = WIN_FULL,
             .default_key = KC_UP,
             .default_mods = MOD_LGUI,
+            .mac_os_mods = MOD_LGUI | MOD_LALT,
+            .mac_os_key = KC_ENTER,
         },
         keycode,
         record
@@ -354,6 +360,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = DESK_LEFT,
             .default_key = KC_LEFT,
             .default_mods = MOD_LGUI | MOD_LCTL,
+            .mac_os_mods = MOD_LGUI,
         },
         keycode,
         record
@@ -364,6 +371,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = DESK_RIGHT,
             .default_key = KC_RIGHT,
             .default_mods = MOD_LGUI | MOD_LCTL,
+            .mac_os_mods = MOD_LGUI,
         },
         keycode,
         record
@@ -374,6 +382,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = MON_LEFT,
             .default_key = KC_LEFT,
             .default_mods = MOD_LGUI | MOD_LSFT,
+            .mac_os_mods = MOD_LGUI | MOD_LALT | MOD_LCTL,
         },
         keycode,
         record
@@ -384,6 +393,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .trigger = MON_RIGHT,
             .default_key = KC_RIGHT,
             .default_mods = MOD_LGUI | MOD_LSFT,
+            .mac_os_mods = MOD_LGUI | MOD_LALT | MOD_LCTL,
         },
         keycode,
         record
