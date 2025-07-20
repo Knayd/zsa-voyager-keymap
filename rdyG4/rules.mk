@@ -11,3 +11,4 @@ OS_DETECTION_ENABLE = yes
 SRC +=  swapper.c
 SRC +=  oneshot.c
 SRC +=  magickey.c
+SRC +=  jumplines.c
