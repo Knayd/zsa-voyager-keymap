@@ -134,14 +134,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-const uint16_t PROGMEM combo0[] = { KC_R, KC_F, COMBO_END};
-const uint16_t PROGMEM combo1[] = { OS_SHFT, LT(4, KC_ENTER), COMBO_END};
-const uint16_t PROGMEM combo2[] = { KC_D, KC_E, COMBO_END};
+const uint16_t PROGMEM combo0[] = { KC_F, KC_R, COMBO_END};
+const uint16_t PROGMEM combo1[] = { KC_D, KC_E, COMBO_END};
+const uint16_t PROGMEM combo2[] = { KC_W, KC_S, COMBO_END};
+const uint16_t PROGMEM combo3[] = { KC_Q, KC_A, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, KC_LEFT_CTRL),
-    COMBO(combo1, CW_TOGG),
-    COMBO(combo2, KC_LEFT_SHIFT),
+    COMBO(combo1, KC_LEFT_SHIFT),
+    COMBO(combo2, KC_LEFT_ALT),
+    COMBO(combo3, KC_LEFT_GUI),
 };
 
 
