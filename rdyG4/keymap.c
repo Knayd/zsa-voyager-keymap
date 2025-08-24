@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
     KC_TRANSPARENT, LCTL(KC_W),     KC_TRANSPARENT, LCTL(KC_PAGE_UP),LCTL(KC_PGDN),  TD(DANCE_3),                                    KC_PAGE_UP,     KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT, 
     LALT(KC_BSPC),  OSM(MOD_LGUI),  OSM(MOD_LALT),  OSM(MOD_LSFT),  OSM(MOD_LCTL),  KC_TRANSPARENT,                                 KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT, 
-    LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, LALT(LCTL(KC_L)),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_CAPS,                                        KC_TRANSPARENT, LALT(LCTL(KC_L)),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [2] = LAYOUT_voyager(
@@ -115,7 +115,14 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 
+
 extern rgb_config_t rgb_matrix_config;
+
+RGB hsv_to_rgb_with_value(HSV hsv) {
+  RGB rgb = hsv_to_rgb( hsv );
+  float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+  return (RGB){ f * rgb.r, f * rgb.g, f * rgb.b };
+}
 
 void keyboard_post_init_user(void) {
   rgb_matrix_enable();
@@ -136,9 +143,8 @@ void set_layer_color(int layer) {
     if (!hsv.h && !hsv.s && !hsv.v) {
         rgb_matrix_set_color( i, 0, 0, 0 );
     } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+        RGB rgb = hsv_to_rgb_with_value(hsv);
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
   }
 }
@@ -147,107 +153,26 @@ bool rgb_matrix_indicators_user(void) {
   if (rawhid_state.rgb_control) {
       return false;
   }
-  if (keyboard_config.disable_layer_led) { return false; }
-  switch (biton32(layer_state)) {
-    case 7:
-      set_layer_color(7);
-      break;
-   default:
-    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
+  if (!keyboard_config.disable_layer_led) { 
+    switch (biton32(layer_state)) {
+      case 7:
+        set_layer_color(7);
+        break;
+     default:
+        if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+          rgb_matrix_set_color_all(0, 0, 0);
+        }
+    }
+  } else {
+    if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
       rgb_matrix_set_color_all(0, 0, 0);
-    break;
+    }
   }
+
   return true;
 }
 
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case ST_MACRO_0:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_MINUS)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
-    }
-    break;
-    case ST_MACRO_1:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
-    }
-    break;
-
-    case RGB_SLD:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-      }
-      return false;
-    case HSV_0_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(0,255,255);
-      }
-      return false;
-    case HSV_74_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(74,255,255);
-      }
-      return false;
-    case HSV_152_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(152,255,255);
-      }
-      return false;
-    case HSV_41_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(41,255,255);
-      }
-      return false;
-    case HSV_135_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(135,255,255);
-      }
-      return false;
-    case HSV_0_0_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(0,0,255);
-      }
-      return false;
-    case HSV_114_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(114,255,255);
-      }
-      return false;
-    case HSV_234_255_255:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(234,255,255);
-      }
-      return false;
-    case HSV_217_249_239:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(217,249,239);
-      }
-      return false;
-    case HSV_191_247_228:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(191,247,228);
-      }
-      return false;
-    case HSV_60_247_227:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(60,247,227);
-      }
-      return false;
-  }
-  return true;
-}
 
 typedef struct {
     bool is_press_action;
@@ -451,3 +376,91 @@ tap_dance_action_t tap_dance_actions[] = {
         [DANCE_4] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_4_finished, dance_4_reset),
         [DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_5_finished, dance_5_reset),
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case ST_MACRO_0:
+    if (record->event.pressed) {
+      SEND_STRING(SS_TAP(X_MINUS)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
+    }
+    break;
+    case ST_MACRO_1:
+    if (record->event.pressed) {
+      SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
+    }
+    break;
+
+    case RGB_SLD:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+      }
+      return false;
+    case HSV_0_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(0,255,255);
+      }
+      return false;
+    case HSV_74_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(74,255,255);
+      }
+      return false;
+    case HSV_152_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(152,255,255);
+      }
+      return false;
+    case HSV_41_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(41,255,255);
+      }
+      return false;
+    case HSV_135_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(135,255,255);
+      }
+      return false;
+    case HSV_0_0_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(0,0,255);
+      }
+      return false;
+    case HSV_114_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(114,255,255);
+      }
+      return false;
+    case HSV_234_255_255:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(234,255,255);
+      }
+      return false;
+    case HSV_217_249_239:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(217,249,239);
+      }
+      return false;
+    case HSV_191_247_228:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(191,247,228);
+      }
+      return false;
+    case HSV_60_247_227:
+      if (record->event.pressed) {
+        rgblight_mode(1);
+        rgblight_sethsv(60,247,227);
+      }
+      return false;
+  }
+  return true;
+}
