@@ -1,4 +1,5 @@
 #include "magickey.h"
+#include "os_mode.h"
 
 void handle_magic_key(
     magic_key_config_t config,
@@ -7,8 +8,7 @@ void handle_magic_key(
 ) {
     if (keycode != config.trigger) return;
 
-    os_variant_t os = detected_host_os();
-    bool is_mac_os = os == OS_MACOS || os == OS_IOS;
+    bool is_mac_os = os_mode_get() == OS_MAC;
     uint16_t key = (is_mac_os && config.mac_os_key) ? config.mac_os_key : config.default_key;
     uint8_t mods = (is_mac_os && config.mac_os_mods) ? config.mac_os_mods : config.default_mods;
 
