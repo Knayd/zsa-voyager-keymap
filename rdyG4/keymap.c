@@ -3,7 +3,7 @@
 #include "i18n.h"
 #include "print.h"
 #include "swapper.h"
-#include "oneshot.h"
+#include "nshot_mod.h"
 #include "magickey.h"
 #include "jumplines.h"
 #include "os_mode.h"
@@ -57,10 +57,16 @@ enum custom_keycodes {
   OS_TOGGLE,
 };
 
-oneshot_state os_shft_state = os_up_unqueued;
-oneshot_state os_ctrl_state = os_up_unqueued;
-oneshot_state os_alt_state = os_up_unqueued;
-oneshot_state os_gui_state = os_up_unqueued;
+nshot_state_t  nshot_states[] = {
+//| trigger  | modbit            | swap-to          | max | roll into | State         | ## | timer | keydown? | //roll-in action |
+//|----------|-------------------|------------------|-----|-----------|---------------|----|-------|----------|------------------|
+    {OS_SHFT,  MOD_BIT(KC_LSFT),  MOD_BIT(KC_LSFT),   1,   true,       os_up_unqueued,  0,   0,     false},    // S-a
+    {OS_CTRL,  MOD_BIT(KC_LCTL),  MOD_BIT(KC_LGUI),   1,   true,       os_up_unqueued,  0,   0,     false},    // C-a
+    {OS_ALT,   MOD_BIT(KC_LALT),  MOD_BIT(KC_LALT),   1,   true,       os_up_unqueued,  0,   0,     false},    // A-a
+    {OS_GUI,   MOD_BIT(KC_LGUI),  MOD_BIT(KC_LCTL),   1,   true,       os_up_unqueued,  0,   0,     false},    // G-a
+};
+
+uint8_t NUM_NSHOT_STATES = sizeof(nshot_states) / sizeof(nshot_state_t);
 
 enum tap_dance_codes {
   DANCE_0,
@@ -76,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           TD(DANCE_0),    KC_7,           KC_8,           KC_9,           KC_0,           TD(DANCE_1),
     KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(DANCE_2),
-    KC_BSPC,        KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_QUOTE,       KC_SCLN,        
+    KC_BSPC,        KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_QUOTE,       KC_SCLN,
     MO(8),          KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
                                                     LA_NAV,         LT(4, KC_ENTER),                                      KC_LEFT_SHIFT,  LT(2, KC_SPACE)
   ),
@@ -207,26 +213,26 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
 
-  if (os_shft_state != os_up_unqueued) {
+  if (nshot_states[0].state != os_up_unqueued) {
     rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
   }
 
-  if (os_ctrl_state != os_up_unqueued) {
+  if (nshot_states[1].state != os_up_unqueued) {
     rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_RED);
   }
 
-  if (os_alt_state != os_up_unqueued) {
+  if (nshot_states[2].state != os_up_unqueued) {
     rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_RED);
   }
 
-  if (os_gui_state != os_up_unqueued) {
+  if (nshot_states[3].state != os_up_unqueued) {
     rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_RED);
   }
 
   return true;
 }
 
-bool is_oneshot_cancel_key(uint16_t keycode) {
+bool is_nshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case LA_NAV:
         return true;
@@ -235,7 +241,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
     }
 }
 
-bool is_oneshot_ignored_key(uint16_t keycode) {
+bool is_nshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case LA_NAV:
     case OS_SHFT:
@@ -476,25 +482,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     #endif
 
+    process_nshot_state(keycode, record, false);
+
     update_swapper(
         &sw_win_active, KC_LEFT_ALT, KC_TAB, SW_WIN,
-        keycode, record
-    );
-
-    update_oneshot(
-        &os_shft_state, KC_LSFT, OS_SHFT,
-        keycode, record
-    );
-    update_oneshot(
-        &os_ctrl_state, KC_LCTL, OS_CTRL,
-        keycode, record
-    );
-    update_oneshot(
-        &os_alt_state, KC_LALT, OS_ALT,
-        keycode, record
-    );
-    update_oneshot(
-        &os_gui_state, KC_LGUI, OS_GUI,
         keycode, record
     );
 

@@ -12,3 +12,4 @@ SRC +=  oneshot.c
 SRC +=  magickey.c
 SRC +=  jumplines.c
 SRC +=  os_mode.c
+SRC +=  nshot_mod.c
