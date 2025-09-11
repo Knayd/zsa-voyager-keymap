@@ -1,3 +1,4 @@
+#define CHORDAL_HOLD
 #define PERMISSIVE_HOLD
 
 #define QUICK_TAP_TERM 0
@@ -23,9 +24,8 @@
 #undef MOUSEKEY_WHEEL_TIME_TO_MAX
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 8
 
-#define SERIAL_NUMBER "rdyG4/Ynerja"
+#define SERIAL_NUMBER "rdyG4/GGLVeV"
 #define LAYER_STATE_16BIT
-#define COMBO_COUNT 4
 
 #define RGB_MATRIX_STARTUP_SPD 60
 
