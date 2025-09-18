@@ -172,6 +172,19 @@ bool rgb_matrix_indicators_user(void) {
 extern bool set_scrolling;
 extern bool navigator_turbo;
 extern bool navigator_aim;
+void pointing_device_init_user(void) {
+    set_auto_mouse_enable(true);
+}
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+  switch (keycode) {
+    case DRAG_SCROLL:
+    case KC_MS_BTN3:
+    case KC_MS_BTN1:
+    case KC_MS_BTN2:
+      return true;
+  }
+  return is_mouse_record_user(keycode, record);
+}
 
 
 typedef struct {
