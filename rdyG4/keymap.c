@@ -28,6 +28,7 @@ enum custom_keycodes {
   HSV_60_247_227,
   ST_MACRO_0,
   ST_MACRO_1,
+  DRAG_SCROLL,
 
   SW_WIN,  // Switch to next window (alt-tab)
   // Custom oneshot mod implementation with no timers.
@@ -83,8 +84,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,      KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(DANCE_0),
     KC_BSPC,        MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LSFT, KC_D),MT(MOD_LCTL, KC_F),KC_G,                                           KC_H,           MT(MOD_LCTL, KC_J),MT(MOD_LSFT, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_QUOTE),KC_SCLN,
     MO(7),          KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
-    KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_BTN1,     MO(1),                                          LT(2, KC_SPACE),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TD(DANCE_1),    TD(DANCE_2),
-                                                    LT(4, KC_ENTER),KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_LEFT_SHIFT
+    KC_TAB,         KC_TRANSPARENT, KC_MS_BTN3,     KC_MS_BTN2,     KC_MS_BTN1,     MO(1),                                          LT(2, KC_SPACE),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, TD(DANCE_1),    TD(DANCE_2),
+                                                    LT(4, KC_ENTER),DRAG_SCROLL,                                    KC_TRANSPARENT, KC_LEFT_SHIFT
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         PREV_TAB,NEXT_TAB,TD(DANCE_3),                                                   JUMP_UP,        KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
@@ -652,6 +653,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
+    case DRAG_SCROLL:
+      if (record->event.pressed) {
+        set_scrolling = true;
+      } else {
+        set_scrolling = false;
+      }
+      return false;
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
