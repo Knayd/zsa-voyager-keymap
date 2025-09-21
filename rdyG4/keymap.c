@@ -656,8 +656,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DRAG_SCROLL:
       if (record->event.pressed) {
         set_scrolling = true;
+        if (!host_keyboard_led_state().caps_lock) {
+            tap_code(KC_CAPS);
+        }
       } else {
         set_scrolling = false;
+        if (host_keyboard_led_state().caps_lock) {
+            tap_code(KC_CAPS);
+        }
       }
       return false;
     case RGB_SLD:
