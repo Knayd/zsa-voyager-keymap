@@ -24,9 +24,10 @@
 #undef MOUSEKEY_WHEEL_TIME_TO_MAX
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 8
 
-#define SERIAL_NUMBER "rdyG4/0WpppP"
+#define SERIAL_NUMBER "rdyG4/oryyMD"
 #define LAYER_STATE_16BIT
 #define COMBO_COUNT 1
+#define HCS(report) host_consumer_send(record->event.pressed ? report : 0); return false
 
 #define WHEEL_EXTENDED_SUPPORT
 #define POINTING_DEVICE_HIRES_SCROLL_ENABLE
