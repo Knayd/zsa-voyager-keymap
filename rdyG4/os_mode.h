@@ -10,4 +10,6 @@ void os_mode_init(void);
 
 void os_mode_toggle(void);
 
+void os_mode_swap_ctrl_gui(void);
+
 os_mode_t os_mode_get(void);

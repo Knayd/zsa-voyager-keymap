@@ -18,11 +18,18 @@ void os_mode_init(void) {
         user_config.os_mode = 0;
         eeconfig_update_user(user_config.raw);
     }
+    os_mode_swap_ctrl_gui();
 }
 
 void os_mode_toggle(void) {
     user_config.os_mode = !user_config.os_mode;
     eeconfig_update_user(user_config.raw);
+    os_mode_swap_ctrl_gui();
+}
+
+void os_mode_swap_ctrl_gui(void) {
+    bool is_mac_os = user_config.os_mode == OS_MAC;
+    keymap_config.swap_lctl_lgui = is_mac_os;
 }
 
 os_mode_t os_mode_get(void) {
