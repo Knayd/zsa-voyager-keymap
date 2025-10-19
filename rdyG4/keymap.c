@@ -27,7 +27,6 @@ enum custom_keycodes {
   HSV_191_247_228,
   HSV_60_247_227,
   ST_MACRO_0,
-  MAC_MISSION_CONTROL,
   DRAG_SCROLL,
   TOGGLE_SCROLL,
 
@@ -42,6 +41,7 @@ enum custom_keycodes {
   DLT_WRD, // Delete word
   NEXT_TAB,
   PREV_TAB,
+  KC_APPS, // Mission control / Task view
   // Win manager keys
   WIN_LEFT,
   WIN_RIGHT,
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [6] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, MAC_MISSION_CONTROL,KC_MS_BTN3, TOGGLE_SCROLL, KC_TRANSPARENT,                                 KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_APPS,        KC_MS_BTN3,     TOGGLE_SCROLL,  KC_TRANSPARENT,                                 KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_LGUI,        KC_LALT,        KC_LSFT,        KC_LCTL,        KC_MS_BTN2,                                     KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, DESK_LEFT,      DESK_RIGHT,     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_MS_BTN1,     DRAG_SCROLL,                                    WIN_FULL, KC_TRANSPARENT
@@ -512,6 +512,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         record
     );
 
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = KC_APPS,
+            .default_key = KC_TAB,
+            .default_mods = MOD_LGUI,
+            .mac_os_key = KC_UP,
+            .mac_os_mods = MOD_LCTL
+        },
+        keycode,
+        record
+    );
 
     // Custom page up/down
     handle_jump_line_key(JUMP_UP, KC_UP, keycode, record);
@@ -647,8 +658,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         os_mode_toggle();
         return false;
     }
-    case MAC_MISSION_CONTROL:
-      HCS(0x29F);
 
     case DRAG_SCROLL:
       if (record->event.pressed) {
