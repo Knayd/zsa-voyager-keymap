@@ -27,7 +27,6 @@ enum custom_keycodes {
   HSV_191_247_228,
   HSV_60_247_227,
   ST_MACRO_0,
-  ST_MACRO_1,
   MAC_MISSION_CONTROL,
   DRAG_SCROLL,
   TOGGLE_SCROLL,
@@ -97,10 +96,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [2] = LAYOUT_voyager(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_EXLM,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,                                        KC_EQUAL,       KC_GRAVE,       KC_AMPR,        KC_PIPE,        KC_PLUS,        KC_TRANSPARENT,
-    KC_TRANSPARENT, OS_GUI,         OS_ALT,         OS_SHFT,        OS_CTRL,        KC_TRANSPARENT,                                 KC_ASTR,        KC_LPRN,        KC_LCBR,        KC_LBRC,        KC_MINUS,       KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_BSLS,        KC_CIRC,        ST_MACRO_0,     ST_MACRO_1,     KC_TRANSPARENT,                                 KC_TILD,        KC_RPRN,        KC_RCBR,        KC_RBRC,        KC_UNDS,        KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_AT,          KC_DLR,         KC_EXLM,        KC_PERC,                                        KC_GRAVE,       KC_ASTR,        KC_AMPR,        KC_PIPE,        KC_PLUS,        KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_LABK,        KC_RABK,        KC_DQUO,        KC_EQUAL,       KC_LBRC,                                        KC_RBRC,        KC_LPRN,        KC_RPRN,        KC_COLN,        KC_MINUS,       KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_BSLS,        KC_TRANSPARENT, ST_MACRO_0,     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TILD,        KC_LCBR,        KC_RCBR,        KC_TRANSPARENT, KC_UNDS,        KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [3] = LAYOUT_voyager(
@@ -646,11 +645,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_MINUS)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
-    }
-    break;
-    case ST_MACRO_1:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
     }
     break;
 
