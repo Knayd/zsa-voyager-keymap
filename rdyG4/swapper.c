@@ -24,6 +24,10 @@ void update_swapper(
             register_code(KC_ESCAPE);
             unregister_code(KC_ESCAPE);
         }
+        if(keycode == KC_MS_BTN1) {
+            tap_code(keycode);
+            wait_ms(2); // Wait so only click gets processed and avoid double selection
+        }
         unregister_code(cmdish);
         *active = false;
     }
