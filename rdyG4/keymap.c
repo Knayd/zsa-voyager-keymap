@@ -85,8 +85,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           TD(DANCE_0),    KC_7,           KC_8,           KC_9,           KC_0,           TD(DANCE_1),
     KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(DANCE_2),
-    KC_BSPC,        MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LSFT, KC_D),MT(MOD_LCTL, KC_F),KC_G,                                           KC_H,           MT(MOD_LCTL, KC_J),MT(MOD_LSFT, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_QUOTE),KC_SCLN,
-    KC_TRANSPARENT, KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
+    KC_BSPC,        LT(6, KC_A),    MT(MOD_LALT, KC_S),MT(MOD_LSFT, KC_D),MT(MOD_LCTL, KC_F),KC_G,                                           KC_H,           MT(MOD_LCTL, KC_J),MT(MOD_LSFT, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_QUOTE),KC_SCLN,
+    KC_TRANSPARENT, MT(MOD_LGUI, KC_Z),KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
                                                     MO(1),          LT(3, KC_ENTER),                                KC_LEFT_SHIFT,  LT(2, KC_SPACE)
   ),
   [1] = LAYOUT_voyager(
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [6] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, TOGGLE_SCROLL,  KC_APPS,        KC_MS_BTN3,     SHOW_DESK,        KC_TRANSPARENT,                                 KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_LALT,        KC_LSFT,        KC_LCTL,        KC_MS_BTN2,                                     KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, QK_LLCK,        KC_LALT,        KC_LSFT,        KC_LCTL,        KC_MS_BTN2,                                     KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, DESK_LEFT,      DESK_RIGHT,     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_MS_BTN1,     DRAG_SCROLL,                                    WIN_FULL, KC_TRANSPARENT
   ),
@@ -266,8 +266,16 @@ void pointing_device_init_user(void) {
 }
 
 bool is_mouse_record_user(uint16_t keycode, keyrecord_t* record) {
-  // All keys are not mouse keys when one shot auto mouse is enabled.
-  return false;
+  // Treat all keys as mouse keys when in the automouse layer so that any key set resets the timeout without leaving the layer.
+  if (!layer_state_is(AUTO_MOUSE_TARGET_LAYER)){
+    // When depressing a mouse key with a LT key at the same time, the mouse key tracker is not decremented.
+    // This is a workaround to fix that
+    if (IS_MOUSE_KEYCODE(keycode) && !record->event.pressed) {
+      return true;
+    }
+    return false;
+  }
+  return true;
 }
 
 
