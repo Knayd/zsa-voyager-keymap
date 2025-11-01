@@ -126,8 +126,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [6] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, TOGGLE_SCROLL,  KC_APPS,        KC_MS_BTN3,     SHOW_DESK,        KC_TRANSPARENT,                                 KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, QK_LLCK,        KC_LALT,        KC_LSFT,        KC_LCTL,        KC_MS_BTN2,                                     KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, QK_LLCK,        KC_APPS,        KC_MS_BTN3,     SHOW_DESK,        TOGGLE_SCROLL,                                  KC_TRANSPARENT, MON_LEFT,       WIN_UP,         MON_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_LALT,        KC_LSFT,        KC_LCTL,        KC_MS_BTN2,                                     KC_TRANSPARENT, WIN_LEFT,       WIN_DOWN,       WIN_RIGHT,      KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                 KC_TRANSPARENT, DESK_LEFT,      DESK_RIGHT,     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_MS_BTN1,     DRAG_SCROLL,                                    WIN_FULL, KC_TRANSPARENT
   ),
