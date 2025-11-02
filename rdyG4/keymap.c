@@ -3,15 +3,12 @@
 #include "i18n.h"
 #include "print.h"
 #include "swapper.h"
-#include "nshot_mod.h"
 #include "magickey.h"
-#include "jumplines.h"
 #include "os_mode.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #ifndef ZSA_SAFE_RANGE
 #define ZSA_SAFE_RANGE SAFE_RANGE
 #endif
-#define LA_NAV MO(1)
 
 enum custom_keycodes {
   RGB_SLD = ZSA_SAFE_RANGE,
@@ -31,11 +28,6 @@ enum custom_keycodes {
   TOGGLE_SCROLL,
 
   SW_WIN,  // Switch to next window (alt-tab)
-  // Custom oneshot mod implementation with no timers.
-  OS_SHFT,
-  OS_CTRL,
-  OS_ALT,
-  OS_GUI,
 
   // Magic keys
   DLT_WRD, // Delete word
@@ -53,23 +45,9 @@ enum custom_keycodes {
   MON_LEFT,
   MON_RIGHT,
   SHOW_DESK,
-  // Custom page up/down
-  JUMP_UP,
-  JUMP_DOWN,
   // OS mode
   OS_TOGGLE,
 };
-
-nshot_state_t  nshot_states[] = {
-//| trigger  | modbit            | swap-to          | max | roll into | State         | ## | timer | keydown? | //roll-in action |
-//|----------|-------------------|------------------|-----|-----------|---------------|----|-------|----------|------------------|
-    {OS_SHFT,  MOD_BIT(KC_LSFT),  MOD_BIT(KC_LSFT),   1,   true,       os_up_unqueued,  0,   0,     false},    // S-a
-    {OS_CTRL,  MOD_BIT(KC_LCTL),  MOD_BIT(KC_LGUI),   1,   true,       os_up_unqueued,  0,   0,     false},    // C-a
-    {OS_ALT,   MOD_BIT(KC_LALT),  MOD_BIT(KC_LALT),   1,   true,       os_up_unqueued,  0,   0,     false},    // A-a
-    {OS_GUI,   MOD_BIT(KC_LGUI),  MOD_BIT(KC_LCTL),   1,   true,       os_up_unqueued,  0,   0,     false},    // G-a
-};
-
-uint8_t NUM_NSHOT_STATES = sizeof(nshot_states) / sizeof(nshot_state_t);
 
 enum tap_dance_codes {
   DANCE_0,
@@ -91,8 +69,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         PREV_TAB,       NEXT_TAB,       KC_TRANSPARENT,                                     JUMP_UP,        KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
-    DLT_WRD,        KC_TRANSPARENT,     KC_LEFT_ALT,    KC_LEFT_SHIFT,  KC_LEFT_CTRL,  KC_TRANSPARENT,                                     JUMP_DOWN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         PREV_TAB,       NEXT_TAB,       KC_TRANSPARENT,                                     KC_PGUP,        KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
+    DLT_WRD,        KC_TRANSPARENT,     KC_LEFT_ALT,    KC_LEFT_SHIFT,  KC_LEFT_CTRL,  KC_TRANSPARENT,                                     KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
     LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                    TD(DANCE_3),    LALT(LCTL(KC_L)),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -203,49 +181,11 @@ bool rgb_matrix_indicators_user(void) {
     }
   }
 
-  if (nshot_states[0].state != os_up_unqueued) {
-    rgb_matrix_set_color(g_led_config.matrix_co[2][4], RGB_RED);
-  }
-
-  if (nshot_states[1].state != os_up_unqueued) {
-    rgb_matrix_set_color(g_led_config.matrix_co[2][5], RGB_RED);
-  }
-
-  if (nshot_states[2].state != os_up_unqueued) {
-    rgb_matrix_set_color(g_led_config.matrix_co[2][3], RGB_RED);
-  }
-
-  if (nshot_states[3].state != os_up_unqueued) {
-    rgb_matrix_set_color(g_led_config.matrix_co[2][2], RGB_RED);
-  }
-
   if (os_mode_get() == OS_MAC) {
     rgb_matrix_set_color(g_led_config.matrix_co[6][5], RGB_RED);
   }
 
   return true;
-}
-
-bool is_nshot_cancel_key(uint16_t keycode) {
-    switch (keycode) {
-    case LA_NAV:
-        return true;
-    default:
-        return false;
-    }
-}
-
-bool is_nshot_ignored_key(uint16_t keycode) {
-    switch (keycode) {
-    case LA_NAV:
-    case OS_SHFT:
-    case OS_CTRL:
-    case OS_ALT:
-    case OS_GUI:
-        return true;
-    default:
-        return false;
-    }
 }
 
 bool is_swapper_cancel_key(uint16_t keycode) {
@@ -487,8 +427,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     #endif
 
-    process_nshot_state(keycode, record, os_mode_get() == OS_MAC);
-
     update_swapper(
         &sw_win_active, KC_LEFT_ALT, KC_TAB, SW_WIN,
         keycode, record
@@ -540,10 +478,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keycode,
         record
     );
-
-    // Custom page up/down
-    handle_jump_line_key(JUMP_UP, KC_UP, keycode, record);
-    handle_jump_line_key(JUMP_DOWN, KC_DOWN, keycode, record);
 
     // Win manager keys
 
