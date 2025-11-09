@@ -120,9 +120,11 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
 );
 
 const uint16_t PROGMEM combo0[] = { KC_G, KC_B, COMBO_END};
+const uint16_t PROGMEM combo_ctrl_clk[] = { KC_MS_BTN1, KC_LEFT_CTRL, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo0, KC_ENTER),
+    COMBO(combo_ctrl_clk, LCTL(KC_MS_BTN1)),
 };
 
 
