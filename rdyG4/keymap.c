@@ -134,7 +134,7 @@ const uint16_t PROGMEM combo10[] = { KC_O, MT(MOD_LALT, KC_L), COMBO_END};
 const uint16_t PROGMEM combo11[] = { KC_P, MT(MOD_LGUI, KC_QUOTE), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo_ctrl_clk, LCTL(KC_MS_BTN1)),
+    COMBO(combo_ctrl_clk, LGUI(KC_MS_BTN1)),
     COMBO(combo0, KC_F11),
     COMBO(combo1, KC_F12),
     COMBO(combo2, KC_F1),
