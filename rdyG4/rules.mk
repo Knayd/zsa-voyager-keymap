@@ -8,6 +8,7 @@ CAPS_WORD_ENABLE = yes
 COMBO_ENABLE = yes
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = navigator_trackball
+OS_DETECTION_ENABLE = yes
 SRC +=  swapper.c
 SRC +=  magickey.c
 SRC +=  os_mode.c
