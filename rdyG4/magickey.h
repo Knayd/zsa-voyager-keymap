@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "quantum.h"
 
 typedef struct {
     uint16_t trigger;
@@ -15,3 +16,6 @@ void handle_magic_key(
     uint16_t keycode,
     keyrecord_t *record
 );
+
+// Some keys, like mouse buttons, need a delay after applying mods for the whole thing to work correctly
+bool is_key_with_delayed_mods(uint16_t keycode);

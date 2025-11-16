@@ -34,6 +34,7 @@ enum custom_keycodes {
   NEXT_TAB,
   PREV_TAB,
   KC_APPS, // Mission control / Task view
+  CTRL_CLK, // OS-aware Ctrl/Cmd + Click combo
   // Win manager keys
   WIN_LEFT,
   WIN_RIGHT,
@@ -62,7 +63,7 @@ enum tap_dance_codes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           TD(DANCE_0),    KC_7,           KC_8,           KC_9,           KC_0,           TD(DANCE_1),
-    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(DANCE_2),
+    KC_TRANSPARENT, KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           TD(DANCE_2),
     KC_BSPC,        MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LSFT, KC_D),MT(MOD_LCTL, KC_F),KC_G,                                           KC_H,           MT(MOD_LCTL, KC_J),MT(MOD_LSFT, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_QUOTE),KC_SCLN,
     KC_TRANSPARENT, KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
                                                     LT(1, KC_TAB),  LT(3, KC_ENTER),                                OSM(MOD_LSFT),  LT(2, KC_SPACE)
@@ -134,7 +135,7 @@ const uint16_t PROGMEM combo10[] = { KC_O, MT(MOD_LALT, KC_L), COMBO_END};
 const uint16_t PROGMEM combo11[] = { KC_P, MT(MOD_LGUI, KC_QUOTE), COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo_ctrl_clk, LGUI(KC_MS_BTN1)),
+    COMBO(combo_ctrl_clk, CTRL_CLK),
     COMBO(combo0, KC_F11),
     COMBO(combo1, KC_F12),
     COMBO(combo2, KC_F1),
@@ -219,6 +220,15 @@ bool rgb_matrix_indicators_user(void) {
 bool is_swapper_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case KC_ESCAPE:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool is_key_with_delayed_mods(uint16_t keycode) {
+    switch (keycode) {
+    case CTRL_CLK:
         return true;
     default:
         return false;
@@ -605,6 +615,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_key = KC_D,
             .default_mods = MOD_LGUI,
             .mac_os_key = KC_F11,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = CTRL_CLK,
+            .default_key = KC_MS_BTN1,
+            .default_mods = MOD_LCTL,
+            .mac_os_mods = MOD_LGUI,
         },
         keycode,
         record
