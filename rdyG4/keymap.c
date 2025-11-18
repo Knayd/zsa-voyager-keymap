@@ -35,6 +35,8 @@ enum custom_keycodes {
   PREV_TAB,
   KC_APPS, // Mission control / Task view
   CTRL_CLK, // OS-aware Ctrl/Cmd + Click combo
+  WRD_LEFT,
+  WRD_RIGHT,
   // Win manager keys
   WIN_LEFT,
   WIN_RIGHT,
@@ -71,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TRANSPARENT, LCTL(KC_W),     SW_WIN,         PREV_TAB,       NEXT_TAB,       KC_TRANSPARENT,                                     KC_PGUP,        KC_HOME,        KC_UP,          KC_END,         KC_TRANSPARENT, KC_TRANSPARENT,
-    DLT_WRD,        KC_TRANSPARENT,     KC_LEFT_ALT,    KC_LEFT_SHIFT,  KC_LEFT_CTRL,  KC_TRANSPARENT,                                     KC_PGDN,        KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    DLT_WRD,        KC_TRANSPARENT,     KC_LEFT_ALT,    KC_LEFT_SHIFT,  KC_LEFT_CTRL,  KC_TRANSPARENT,                                  WRD_LEFT,       KC_LEFT,        KC_DOWN,        KC_RIGHT,       WRD_RIGHT,      KC_TRANSPARENT,
     LCTL(LSFT(KC_Z)),KC_PC_UNDO,     KC_PC_CUT,      KC_PC_COPY,     KC_PC_PASTE,    KC_TRANSPARENT,                                    TD(DANCE_3),    LALT(LCTL(KC_L)),KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -626,6 +628,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             .default_key = KC_MS_BTN1,
             .default_mods = MOD_LCTL,
             .mac_os_mods = MOD_LGUI,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WRD_LEFT,
+            .default_key = KC_LEFT,
+            .default_mods = MOD_LCTL,
+            .mac_os_mods = MOD_LALT,
+        },
+        keycode,
+        record
+    );
+
+    handle_magic_key(
+        (magic_key_config_t){
+            .trigger = WRD_RIGHT,
+            .default_key = KC_RIGHT,
+            .default_mods = MOD_LCTL,
+            .mac_os_mods = MOD_LALT,
         },
         keycode,
         record
