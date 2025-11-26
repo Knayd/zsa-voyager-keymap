@@ -17,7 +17,7 @@ void handle_magic_key(
             add_mods(mods);
             send_keyboard_report();
             if (is_key_with_delayed_mods(keycode)) {
-                wait_ms(2);
+                wait_ms(10);
             }
         }
         register_code(key);
