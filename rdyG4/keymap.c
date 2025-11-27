@@ -19,7 +19,6 @@ enum custom_keycodes {
   HSV_217_249_239,
   HSV_191_247_228,
   HSV_60_247_227,
-  ST_MACRO_0,
   DRAG_SCROLL,
   TOGGLE_SCROLL,
 };
@@ -53,9 +52,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [2] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_AT,          KC_DLR,         KC_EXLM,        KC_PERC,                                        KC_GRAVE,       KC_ASTR,        KC_AMPR,        KC_PIPE,        KC_PLUS,        KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_LABK,        KC_RABK,        KC_DQUO,        KC_EQUAL,       KC_LBRC,                                        KC_RBRC,        KC_LPRN,        KC_RPRN,        KC_COLN,        KC_MINUS,       KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_BSLS,        KC_TRANSPARENT, ST_MACRO_0,     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TILD,        KC_LCBR,        KC_RCBR,        KC_TRANSPARENT, KC_UNDS,        KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_DQUO,        KC_DLR,         KC_ASTR,                                        KC_PLUS,        KC_PERC,        KC_AMPR,        KC_PIPE,        KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_MINUS,       KC_LABK,        KC_RABK,        KC_EQUAL,       KC_GRAVE,                                       KC_EXLM,        KC_LPRN,        KC_RPRN,        KC_COLN,        KC_UNDS,        KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_BSLS,        KC_LBRC,        KC_RBRC,        KC_AT,          KC_TRANSPARENT,                                 KC_TILD,        KC_LCBR,        KC_RCBR,        KC_TRANSPARENT, KC_QUES,        KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [3] = LAYOUT_voyager(
@@ -193,12 +192,12 @@ typedef struct {
 } tap;
 
 enum {
-    SINGLE_TAP = 1,
-    SINGLE_HOLD,
-    DOUBLE_TAP,
-    DOUBLE_HOLD,
-    DOUBLE_SINGLE_TAP,
-    MORE_TAPS
+    SINGLE_TAP = 1,      
+    SINGLE_HOLD,         
+    DOUBLE_TAP,          
+    DOUBLE_HOLD,         
+    DOUBLE_SINGLE_TAP,   
+    MORE_TAPS            
 };
 
 static tap dance_state[6];
@@ -406,11 +405,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         wait_ms(2);
         del_mods(QK_MODS_GET_MODS(keycode));
       }
-    }
-    break;
-    case ST_MACRO_0:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_MINUS)SS_DELAY(100)  SS_LSFT(SS_TAP(X_DOT)));
     }
     break;
 
