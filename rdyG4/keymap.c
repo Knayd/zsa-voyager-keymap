@@ -69,10 +69,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     LT(2, KC_TAB),  LT(3, KC_ENTER),                                OSM(MOD_LSFT),  LT(1, KC_SPACE)
   ),
   [1] = LAYOUT_voyager(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_DQUO,        KC_DLR,         KC_ASTR,                                        KC_PLUS,        KC_PERC,        KC_AMPR,        KC_PIPE,        KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_MINUS,       KC_LABK,        KC_RABK,        KC_EQUAL,       KC_GRAVE,                                       KC_EXLM,        KC_LPRN,        KC_RPRN,        KC_COLN,        KC_UNDS,        KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_BSLS,        KC_LBRC,        KC_RBRC,        KC_AT,          KC_TRANSPARENT,                                 KC_TILD,        KC_LCBR,        KC_RCBR,        KC_TRANSPARENT, KC_QUES,        KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_DQUO,        KC_DLR,         KC_ASTR,                                        KC_PLUS,        KC_PERC,        KC_AMPR,        KC_PIPE,        KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_MINUS,       KC_LABK,        KC_RABK,        KC_EQUAL,       KC_GRAVE,                                       KC_EXLM,        KC_LPRN,        KC_RPRN,        KC_COLN,        KC_UNDS,        KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_BSLS,        KC_LBRC,        KC_RBRC,        KC_AT,          KC_TRANSPARENT,                                 KC_TILD,        KC_LCBR,        KC_RCBR,        KC_TRANSPARENT, KC_QUES,        KC_TRANSPARENT,
                                                     LT(2, KC_SPACE),KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [2] = LAYOUT_voyager(
@@ -451,7 +451,7 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  // Nav + Mouse = Num
+  // Sym + Nav = Num
   state =  update_tri_layer_state(state, 1, 2, 4);
   return state;
 }
