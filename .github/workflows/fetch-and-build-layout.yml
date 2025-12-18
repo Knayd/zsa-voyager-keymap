@@ -109,7 +109,7 @@ jobs:
 
           # Copy userspace files to the qmk folder
           rm -rf qmk_firmware/users
-          mkdir -p qmk_firmware/users/rdyg4 && cp -r users/rdyg4/. qmk_firmware/users/rdyg4/
+          mkdir -p qmk_firmware/users/rdyG4 && cp -r users/rdyG4/. qmk_firmware/users/rdyG4/
 
           ls -R
           

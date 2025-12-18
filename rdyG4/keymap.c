@@ -5,7 +5,7 @@
 #include "swapper.h"
 #include "magickey.h"
 #include "os_mode.h"
-#include "rdyg4.h"
+#include "rdyG4.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #ifndef ZSA_SAFE_RANGE
 #define ZSA_SAFE_RANGE SAFE_RANGE
