@@ -106,6 +106,10 @@ jobs:
           # Copy layout files to the qmk folder
           rm -rf ${keyboard_directory}/${{ github.event.inputs.layout_geometry }}/keymaps/${{ github.event.inputs.layout_id }}
           mkdir -p ${keyboard_directory}/${{ github.event.inputs.layout_geometry }}/keymaps && cp -r ${{ github.event.inputs.layout_id }} "$_"
+
+          # Copy userspace files to the qmk folder
+          rm -rf qmk_firmware/users
+          mkdir -p qmk_firmware/users/rdyg4 && cp -r users/rdyg4 "$_"
           
           # Build the layout
           docker run -v ./qmk_firmware:/root --rm qmk /bin/sh -c "
