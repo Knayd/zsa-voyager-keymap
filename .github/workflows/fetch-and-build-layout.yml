@@ -110,6 +110,8 @@ jobs:
           # Copy userspace files to the qmk folder
           rm -rf qmk_firmware/users
           mkdir -p qmk_firmware/users/rdyg4 && cp -r users/rdyg4 "$_"
+
+          ls -R
           
           # Build the layout
           docker run -v ./qmk_firmware:/root --rm qmk /bin/sh -c "
